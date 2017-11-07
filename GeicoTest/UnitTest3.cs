@@ -29,15 +29,28 @@ namespace GeicoTest
         [TestMethod]
         public void RentersIconTest()
         {
+            string zip = "20878";
+            string city = "GAITHERSBURG";
+            string streetAddress = "15705 Mahogany Cir";
+
             HomePage homePage = new HomePage(driver);
             homePage.SelectProduct("Renters");
-            homePage.StartQuote("20878");
+            homePage.StartQuote(zip);
 
             CustomerInformationPage customerInformationPage = new CustomerInformationPage(driver);
-            customerInformationPage.FillForm();
-            
+            customerInformationPage.FillForm(streetAddress, city);
 
-           // Assert.AreEqual("Customer Information", iconSelected);
+            ResidenceInformation residenceInformation = new ResidenceInformation(driver);
+
+            residenceInformation.GetAddress();
+
+            Assert.AreEqual(zip, residenceInformation.zip);
+            Assert.AreEqual(city, residenceInformation.city);
+            Assert.AreEqual(streetAddress.ToUpper(), residenceInformation.address);
+            Assert.AreEqual(customerInformationPage.state, residenceInformation.state);
+
+
+
         }
 
 

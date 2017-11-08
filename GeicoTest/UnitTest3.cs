@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using AutoIt;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace GeicoTest
 {
@@ -15,27 +16,62 @@ namespace GeicoTest
 
         IWebDriver driver;
 
-        [TearDown]
-        public void teardown()
+        [Test]
+        public void TableTest()
         {
-            driver.Quit();
+            string searchHeader = "Contact";
+            string searchData = "Adam Thomas";
+            bool foundSearchTerm = false;
+            int foundColumn = -1;
+
+            driver.Navigate().GoToUrl("https://www.w3schools.com/html/html_tables.asp");
+
+            IWebElement table = driver.FindElement(By.Id("customers"));
+
+            IList<IWebElement> tableRows = table.FindElements(By.TagName("tr"));
+
+            IList<IWebElement> tableHeaders = tableRows[0].FindElements(By.TagName("th"));
+
+            //Find data/column nunmber for a certain header
+            for (int i = 0; i < tableHeaders.Count - 1; i++)
+            {
+                if (tableHeaders[i].Text == searchHeader)
+                {
+                    foundColumn = i;
+                }
+            }
+
+
+
+
+            for (int r = 1; r < tableRows.Count - 1; r++)
+            {
+                IList<IWebElement> tableData = tableRows[r].FindElements(By.TagName("td"));
+
+                if (tableData[foundColumn].Text == searchData)
+                {
+                    foundSearchTerm = true;
+                    break;
+                }
+                
+            }
+
+
+            foreach (var row in tableRows)
+            {
+                IList<IWebElement> tableData = row.FindElements(By.TagName("td"));
+
+                foreach (var data in tableData)
+                {
+                    string foundData = data.Text;
+                }
+
+
+            }
+
+
         }
-
-        [SetUp]
-        public void setup()
-        {
-            driver = new ChromeDriver();
-            //DesiredCapabilities caps = new DesiredCapabilities();
-            //caps.SetCapability("deviceName", "LGLS992d45fa362");
-            //caps.SetCapability("platformName", "Android");
-            ////caps.SetCapability("browserName", "Chrome");
-            //caps.SetCapability("appPackage", "com.android.calculator2");
-            //caps.SetCapability("appActivity", "com.android.calculator2.Calculator");
-
-            //driver = new RemoteWebDriver(new Uri("http://127.0.0.1:4723/wd/hub"), caps);
-
-            driver.Navigate().GoToUrl("http://www.geico.com");
-        }
+     
 
         [Test]
         [Ignore ("not needed")]
@@ -44,18 +80,11 @@ namespace GeicoTest
             driver.Navigate().GoToUrl("http://www.picresize.com/");
             driver.FindElement(By.Id("im_file")).Click();
 
-            //AutoItX autoIt = new AutoItX();
-
             AutoItX.WinActivate("Open");
             AutoItX.Send(@"C:\Temp\fly.png");
             AutoItX.Send("{ENTER}");
-
-
             Thread.Sleep(7500);
-
         }
-
-
 
 
         [Test]
@@ -89,6 +118,7 @@ namespace GeicoTest
 
 
         [Test]
+        [Ignore("not needed")]
         public void RentersIconTest()
         {
             string zip = "20878";
@@ -111,31 +141,7 @@ namespace GeicoTest
             Assert.AreEqual(streetAddress.ToUpper(), residenceInformation.address);
             Assert.AreEqual(customerInformationPage.state, residenceInformation.state);
         }
-
-        [Test]
-        public void RentersIconTest2()
-        {
-            string zip = "20878";
-            string city = "GAITHERSBURG";
-            string streetAddress = "15705 Mahogany Cir";
-
-            HomePage homePage = new HomePage(driver);
-            homePage.SelectProduct("Renters");
-            homePage.StartQuote(zip);
-
-            CustomerInformationPage customerInformationPage = new CustomerInformationPage(driver);
-            customerInformationPage.FillForm(streetAddress, city);
-
-            ResidenceInformationPage residenceInformation = new ResidenceInformationPage(driver);
-
-            residenceInformation.GetAddress();
-
-            Assert.AreEqual(zip, residenceInformation.zip);
-            Assert.AreEqual(city, residenceInformation.city);
-            Assert.AreEqual(streetAddress.ToUpper(), residenceInformation.address);
-            Assert.AreEqual(customerInformationPage.state, residenceInformation.state);
-        }
-
+        
 
 
         [Test]
@@ -143,6 +149,27 @@ namespace GeicoTest
         public void theothertest()
         {
             ResidenceInformationPage residenceInformation = new ResidenceInformationPage(driver);
+        }
+
+        [TearDown]
+        public void teardown()
+        {
+            driver.Quit();
+        }
+
+
+        [SetUp]
+        public void setup()
+        {
+            driver = new ChromeDriver();
+            //DesiredCapabilities caps = new DesiredCapabilities();
+            //caps.SetCapability("deviceName", "LGLS992d45fa362");
+            //caps.SetCapability("platformName", "Android");
+            ////caps.SetCapability("browserName", "Chrome");
+            //caps.SetCapability("appPackage", "com.android.calculator2");
+            //caps.SetCapability("appActivity", "com.android.calculator2.Calculator");
+            //driver = new RemoteWebDriver(new Uri("http://127.0.0.1:4723/wd/hub"), caps);
+            driver.Navigate().GoToUrl("http://www.geico.com");
         }
 
     }

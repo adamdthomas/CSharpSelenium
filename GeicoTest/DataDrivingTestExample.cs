@@ -6,6 +6,7 @@ namespace DataDrive
     //http://www.microsoft.com/en-us/download/confirmation.aspx?id=23734
 
     [TestClass]
+    [Ignore]
     public class UnitTest1
     {
         private TestContext testContextInstance;
@@ -16,6 +17,7 @@ namespace DataDrive
         }
 
         [TestMethod]
+        [Ignore]
         [DataSource("System.Data.OleDB",
                     @"Provider=Microsoft.ACE.OLEDB.12.0; Data Source=C:\Temp\test1.xlsx;  
                       Extended Properties='Excel 12.0;HDR=yes';",

@@ -36,11 +36,11 @@ namespace GeicoTest
             HomePage homePage = new HomePage(driver);
             homePage.SelectProduct("Renters");
             homePage.StartQuote(zip);
-
+  
             CustomerInformationPage customerInformationPage = new CustomerInformationPage(driver);
             customerInformationPage.FillForm(streetAddress, city);
 
-            ResidenceInformation residenceInformation = new ResidenceInformation(driver);
+            ResidenceInformationPage residenceInformation = new ResidenceInformationPage(driver);
 
             residenceInformation.GetAddress();
 
@@ -49,16 +49,14 @@ namespace GeicoTest
             Assert.AreEqual(streetAddress.ToUpper(), residenceInformation.address);
             Assert.AreEqual(customerInformationPage.state, residenceInformation.state);
 
-
-
         }
 
 
-        //[TestMethod]
-        //public void FailedTestExample()
-        //{
-    
-        //}
+        [TestMethod]
+        public void theothertest()
+        {
+            ResidenceInformationPage residenceInformation = new ResidenceInformationPage(driver);
+        }
 
     }
 }

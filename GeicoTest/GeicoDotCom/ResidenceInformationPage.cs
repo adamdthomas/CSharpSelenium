@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GeicoTest.GeicoDotCom
 {
-    public class ResidenceInformation
+    public class ResidenceInformationPage
     {
         IWebDriver driver;
         public string city;
@@ -15,7 +15,7 @@ namespace GeicoTest.GeicoDotCom
         public string zip;
         public string address;
 
-        public ResidenceInformation(IWebDriver driver)
+        public ResidenceInformationPage(IWebDriver driver)
         {
             this.driver = driver;
         }
@@ -26,13 +26,10 @@ namespace GeicoTest.GeicoDotCom
             string[] addressParts = fullAdress.Split(',');
 
             //15705 MAHOGANY CIR, GAITHERSBURG, MD, 20878
-
             address = addressParts[0].Trim();
             city = addressParts[1].Trim();
             state = addressParts[2].Trim();
             zip = addressParts[3].Trim();
-
         }
-
     }
 }

@@ -8,6 +8,7 @@ using AutoIt;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System;
+using System.Xml;
 
 namespace GeicoTest
 {
@@ -17,6 +18,63 @@ namespace GeicoTest
     {
 
         IWebDriver driver;
+
+        [Test]
+        public void XMLDemo()
+        {
+            XmlDataDocument xdoc = new XmlDataDocument();
+            xdoc.Load(@"C:\Grid\testx.xml");
+            XmlNode root = xdoc.DocumentElement;
+
+            var urlNode = root.SelectSingleNode("\\pdfBaseURL");
+
+        }
+
+
+
+        [Test]
+        [Ignore("not needed")]
+        public void ServiceTest()
+        {
+            var r = Utilities.rest("http://api.openweathermap.org");
+        }
+
+
+        [Test]
+        [Ignore ("not needed")]
+        public void WindowHandleTest()
+        {
+            driver.Navigate().GoToUrl("https://www.w3schools.com/howto/howto_js_popup.asp");
+
+            string originalWindowHandle = driver.CurrentWindowHandle;
+
+            driver.FindElement(By.XPath("(//a[contains(.,'Try it Yourself')])[1]")).Click();
+
+            IList<string> handles = driver.WindowHandles;
+
+            foreach (var handle in handles)
+            {
+                if (handle != originalWindowHandle)
+                {
+                    driver.SwitchTo().Window(handle);
+                    break;
+                    //Now I am in the new window
+                }
+            }
+
+            //Work with the new window
+            Thread.Sleep(3500);
+            driver.FindElement(By.XPath("//a[@title='Change Orientation']")).Click();
+            Thread.Sleep(3500);
+            driver.Close();
+
+
+            //Switch back to the original window
+            driver.SwitchTo().Window(originalWindowHandle);
+            Thread.Sleep(3500);
+            driver.FindElement(By.XPath("(//a[contains(.,'Previous')])[1]")).Click();
+            Thread.Sleep(3500);
+        }
 
         [Test]
         [Ignore("not needed")]
@@ -116,6 +174,7 @@ namespace GeicoTest
 
         [Test]
         [Category("Smoke")]
+        [Ignore("not needed")]
         public void RentersIconTest()
         {
             //IWebDriver driver = new ChromeDriver();
@@ -180,10 +239,11 @@ namespace GeicoTest
             DesiredCapabilities caps = new DesiredCapabilities();
             caps.SetCapability(CapabilityType.BrowserName, "chrome");
             caps.SetCapability(CapabilityType.Platform, "WIN10");
-            driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), caps);
+
+            //driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), caps);
 
             //Basic Driver instantiation 
-          //  driver = new ChromeDriver();
+            driver = new ChromeDriver();
 
 
             //Navigation

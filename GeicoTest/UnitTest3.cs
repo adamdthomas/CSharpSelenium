@@ -7,6 +7,7 @@ using System.Threading;
 using AutoIt;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System;
 
 namespace GeicoTest
 {
@@ -15,7 +16,7 @@ namespace GeicoTest
     public class UnitTest1
     {
 
-        private IWebDriver driver;
+        IWebDriver driver;
 
         [Test]
         [Ignore("not needed")]
@@ -44,8 +45,6 @@ namespace GeicoTest
             }
 
 
-
-
             for (int r = 1; r < tableRows.Count - 1; r++)
             {
                 IList<IWebElement> tableData = tableRows[r].FindElements(By.TagName("td"));
@@ -67,11 +66,7 @@ namespace GeicoTest
                 {
                     string foundData = data.Text;
                 }
-
-
             }
-
-
         }
      
 
@@ -120,12 +115,11 @@ namespace GeicoTest
 
 
         [Test]
-        [Parallelizable]
         [Category("Smoke")]
         public void RentersIconTest()
         {
-            IWebDriver driver = new ChromeDriver();
-            driver.Navigate().GoToUrl("http://www.geico.com");
+            //IWebDriver driver = new ChromeDriver();
+            //driver.Navigate().GoToUrl("http://www.geico.com");
             string zip = "20878";
             string city = "GAITHERSBURG";
             string streetAddress = "15705 Mahogany Cir";
@@ -145,161 +139,10 @@ namespace GeicoTest
             Assert.AreEqual(city, residenceInformation.city);
             Assert.AreEqual(streetAddress.ToUpper(), residenceInformation.address);
             Assert.AreEqual(customerInformationPage.state, residenceInformation.state);
-            driver.Quit();
+            //driver.Quit();
         }
 
-        [Test]
-        [Parallelizable]
-        [Category("Smoke")]
-        public void RentersIconTest2()
-        {
-            IWebDriver driver = new ChromeDriver();
-            driver.Navigate().GoToUrl("http://www.geico.com");
-            string zip = "20878";
-            string city = "GAITHERSBURG";
-            string streetAddress = "15705 Mahogany Cir";
-
-            HomePage homePage = new HomePage(driver);
-            homePage.SelectProduct("Renters");
-            homePage.StartQuote(zip);
-
-            CustomerInformationPage customerInformationPage = new CustomerInformationPage(driver);
-            customerInformationPage.FillForm(streetAddress, city);
-
-            ResidenceInformationPage residenceInformation = new ResidenceInformationPage(driver);
-
-            residenceInformation.GetAddress();
-
-            Assert.AreEqual(zip, residenceInformation.zip);
-            Assert.AreEqual(city, residenceInformation.city);
-            Assert.AreEqual(streetAddress.ToUpper(), residenceInformation.address);
-            Assert.AreEqual(customerInformationPage.state, residenceInformation.state);
-            driver.Quit();
-        }
-
-        [Test]
-        [Parallelizable]
-        [Category("Regression"), Category("Rel 2")]
-        public void RentersIconTest3()
-        {
-            IWebDriver driver = new ChromeDriver();
-            driver.Navigate().GoToUrl("http://www.geico.com");
-
-            string zip = "20878";
-            string city = "GAITHERSBURG";
-            string streetAddress = "15705 Mahogany Cir";
-
-            HomePage homePage = new HomePage(driver);
-            homePage.SelectProduct("Renters");
-            homePage.StartQuote(zip);
-
-            CustomerInformationPage customerInformationPage = new CustomerInformationPage(driver);
-            customerInformationPage.FillForm(streetAddress, city);
-
-            ResidenceInformationPage residenceInformation = new ResidenceInformationPage(driver);
-
-            residenceInformation.GetAddress();
-
-            Assert.AreEqual(zip, residenceInformation.zip);
-            Assert.AreEqual(city, residenceInformation.city);
-            Assert.AreEqual(streetAddress.ToUpper(), residenceInformation.address);
-            Assert.AreEqual(customerInformationPage.state, residenceInformation.state);
-
-            driver.Quit();
-        }
-
-        [Test]
-        [Parallelizable]
-        [Category("Regression"), Category("Rel 2")]
-        public void RentersIconTest4()
-        {
-            IWebDriver driver = new ChromeDriver();
-            driver.Navigate().GoToUrl("http://www.geico.com");
-
-            string zip = "20878";
-            string city = "GAITHERSBURG";
-            string streetAddress = "15705 Mahogany Cir";
-
-            HomePage homePage = new HomePage(driver);
-            homePage.SelectProduct("Renters");
-            homePage.StartQuote(zip);
-
-            CustomerInformationPage customerInformationPage = new CustomerInformationPage(driver);
-            customerInformationPage.FillForm(streetAddress, city);
-
-            ResidenceInformationPage residenceInformation = new ResidenceInformationPage(driver);
-
-            residenceInformation.GetAddress();
-
-            Assert.AreEqual(zip, residenceInformation.zip);
-            Assert.AreEqual(city, residenceInformation.city);
-            Assert.AreEqual(streetAddress.ToUpper(), residenceInformation.address);
-            Assert.AreEqual(customerInformationPage.state, residenceInformation.state);
-
-            driver.Quit();
-        }
-
-        [Test]
-        [Parallelizable]
-        [Category("Regression"), Category("Rel 1")]
-        public void RentersIconTest5()
-        {
-            IWebDriver driver = new ChromeDriver();
-            driver.Navigate().GoToUrl("http://www.geico.com");
-
-            string zip = "20878";
-            string city = "GAITHERSBURG";
-            string streetAddress = "15705 Mahogany Cir";
-
-            HomePage homePage = new HomePage(driver);
-            homePage.SelectProduct("Renters");
-            homePage.StartQuote(zip);
-
-            CustomerInformationPage customerInformationPage = new CustomerInformationPage(driver);
-            customerInformationPage.FillForm(streetAddress, city);
-
-            ResidenceInformationPage residenceInformation = new ResidenceInformationPage(driver);
-
-            residenceInformation.GetAddress();
-
-            Assert.AreEqual(zip, residenceInformation.zip);
-            Assert.AreEqual(city, residenceInformation.city);
-            Assert.AreEqual(streetAddress.ToUpper(), residenceInformation.address);
-            Assert.AreEqual(customerInformationPage.state, residenceInformation.state);
-
-            driver.Quit();
-        }
-
-        [Test]
-        [Parallelizable]
-        [Category("Regression"), Category("Rel 1")]
-        public void RentersIconTest6()
-        {
-            IWebDriver driver = new ChromeDriver();
-            driver.Navigate().GoToUrl("http://www.geico.com");
-
-            string zip = "20878";
-            string city = "GAITHERSBURG";
-            string streetAddress = "15705 Mahogany Cir";
-
-            HomePage homePage = new HomePage(driver);
-            homePage.SelectProduct("Renters");
-            homePage.StartQuote(zip);
-
-            CustomerInformationPage customerInformationPage = new CustomerInformationPage(driver);
-            customerInformationPage.FillForm(streetAddress, city);
-
-            ResidenceInformationPage residenceInformation = new ResidenceInformationPage(driver);
-
-            residenceInformation.GetAddress();
-
-            Assert.AreEqual(zip, residenceInformation.zip);
-            Assert.AreEqual(city, residenceInformation.city);
-            Assert.AreEqual(streetAddress.ToUpper(), residenceInformation.address);
-            Assert.AreEqual(customerInformationPage.state, residenceInformation.state);
-
-            driver.Quit();
-        }
+      
 
 
 
@@ -311,28 +154,41 @@ namespace GeicoTest
             ResidenceInformationPage residenceInformation = new ResidenceInformationPage(driver);
         }
 
-        //[TearDown]
-        //public void teardown()
-        //{
+        [TearDown]
+        public void teardown()
+        {
 
-        //    if (driver != null) driver.Quit();
-        //    //driver.Quit();
-        //}
+            driver.Quit();
+            //driver.Quit();
+        }
 
 
-        //[SetUp]
-        //public void setup()
-        //{
-        //    driver = new ChromeDriver();
-        //    //DesiredCapabilities caps = new DesiredCapabilities();
-        //    //caps.SetCapability("deviceName", "LGLS992d45fa362");
-        //    //caps.SetCapability("platformName", "Android");
-        //    ////caps.SetCapability("browserName", "Chrome");
-        //    //caps.SetCapability("appPackage", "com.android.calculator2");
-        //    //caps.SetCapability("appActivity", "com.android.calculator2.Calculator");
-        //    //driver = new RemoteWebDriver(new Uri("http://127.0.0.1:4723/wd/hub"), caps);
-        //    driver.Navigate().GoToUrl("http://www.geico.com");
-        //}
+        [SetUp]
+        public void setup()
+        {
+
+            //Appium Driver instantiation
+            //DesiredCapabilities caps = new DesiredCapabilities();
+            //caps.SetCapability("deviceName", "LGLS992d45fa362");
+            //caps.SetCapability("platformName", "Android");
+            ////caps.SetCapability("browserName", "Chrome");
+            //caps.SetCapability("appPackage", "com.android.calculator2");
+            //caps.SetCapability("appActivity", "com.android.calculator2.Calculator");
+            //driver = new RemoteWebDriver(new Uri("http://127.0.0.1:4723/wd/hub"), caps);
+
+            //Grid
+            DesiredCapabilities caps = new DesiredCapabilities();
+            caps.SetCapability(CapabilityType.BrowserName, "chrome");
+            caps.SetCapability(CapabilityType.Platform, "WIN10");
+            driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), caps);
+
+            //Basic Driver instantiation 
+          //  driver = new ChromeDriver();
+
+
+            //Navigation
+            driver.Navigate().GoToUrl("http://www.geico.com");
+        }
 
     }
 }
